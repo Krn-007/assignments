@@ -4,20 +4,41 @@
  * Return a promise.all which return the time in milliseconds it takes to complete the entire operation.
  */
 
-function wait1(t) {
+// promises.all run all three function at the same time that's why this program takes only 10 sec to resolve
 
+function wait1(t) {
+    return new Promise((resolve,reject)=>{
+        console.log("hi");
+        setTimeout(resolve,t*1000)
+    })
 }
 
 function wait2(t) {
-
+    return new Promise((resolve,reject)=>{
+        console.log("hello");
+        setTimeout(resolve,t*1000)
+    })
 }
 
 function wait3(t) {
-
+    return new Promise((resolve,reject)=>{
+        console.log("hello There");
+        setTimeout(resolve,t*1000)
+    })
 }
 
-function calculateTime(t1, t2, t3) {
+async function calculateTime(t1, t2, t3) {
+
+    let startTime = Date.now()
+    await Promise.all([wait1(t1),wait2(t2),wait3(t3)])
+    
+    const totalTime = Date.now() - startTime
+    return totalTime 
 
 }
 
 module.exports = calculateTime;
+module.exports(10,10,10).then((totalTime)=>{
+    console.log(totalTime);
+})
+

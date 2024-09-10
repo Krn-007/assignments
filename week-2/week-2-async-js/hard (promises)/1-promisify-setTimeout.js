@@ -3,6 +3,13 @@
 */
 
 function wait(n) {
+    return new Promise((resolve,reject)=>{
+        setTimeout(resolve,n)
+    })
 }
 
 module.exports = wait;
+
+module.exports(5000).then(()=>{
+    console.log("promise resolved");
+})
