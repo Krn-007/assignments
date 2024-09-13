@@ -9,5 +9,14 @@ There is no automated test for this one, this is more for you to understand time
 */
 
 function calculateTime(n) {
-    return 0.01;
+    let timeNow = performance.now()
+    let sum = 0
+    for (let i = 1; i <= n; i++) {
+        sum += i 
+    }
+    let endTime = (performance.now() - timeNow) /1000
+    return endTime;
 }
+console.log(`Time for Sum from 1 to 100 is ${calculateTime(100)}`);
+console.log(`Time for Sum from 1 to 100000 is ${calculateTime(100000)}`);
+console.log(`Time for Sum from 1 to 1000000000 is ${calculateTime(1000000000)}`);

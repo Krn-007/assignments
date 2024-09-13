@@ -40,6 +40,6 @@ function calculateTotalSpentByCategory(transactions) {
   return result;
 }
 
-module.exports = calculateTotalSpentByCategory(transactions);
+module.exports = calculateTotalSpentByCategory;
 const results = module.exports
-console.log(results);
+console.log(results(transactions));
