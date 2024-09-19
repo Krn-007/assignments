@@ -1,5 +1,5 @@
 //  use this quizData in your app.
-export const quizData = [{
+ const quizData = [{
     "question": "Which language runs in a web browser?",
     "a": "Java",
     "b": "C",
@@ -33,3 +33,76 @@ export const quizData = [{
 },
 // you can add more quiz here
 ]
+
+const questionElement = document.getElementById("questions");
+const answerButtons = document.getElementById("answer-button");
+const nextButton = document.getElementById("next-btn");
+
+let currentQuestionIndex = 0;
+let score = 0;
+
+function startQuiz(){
+    currentQuestionIndex = 0;
+    score = 0;
+    nextButton.innerHTML = "Next";
+    showQuestion();
+}
+
+function showQuestion(){
+    resetState();
+    let currentQuestion = quizData[currentQuestionIndex];
+    let questionNo = currentQuestionIndex + 1;
+    questionElement.innerHTML = questionNo + '.' + currentQuestion.question;
+    for (let option of ['a','b','c','d']) {
+        const button = document.createElement("button");
+        button.innerHTML = currentQuestion[option]
+        button.classList.add("btn")
+        button.addEventListener('click',function(){
+            selectAnswer(button,option)
+        })
+        answerButtons.appendChild(button);
+    }
+}
+function resetState(){
+    nextButton.style.display = "none";
+    while(answerButtons.firstChild){
+        answerButtons.removeChild(answerButtons.firstChild);
+    }
+}
+
+function selectAnswer(button,selectedOption){
+    const currentQuestion = quizData[currentQuestionIndex]
+    if(selectedOption === currentQuestion.correct){
+        button.classList.add("correct")
+        score++
+    }else{
+        button.classList.add("incorrect")
+    }
+    Array.from(answerButtons.children).forEach(btn=> btn.disabled = true)
+    nextButton.style.display = "block";
+}
+
+
+    nextButton.addEventListener('click',function(){
+        currentQuestionIndex++
+        if(currentQuestionIndex < quizData.length){
+        showQuestion()
+        }else{
+
+            showScore()
+        }
+
+    })
+
+    
+
+function showScore(){
+    resetState()
+    questionElement.innerHTML = `You scored ${score} out of ${quizData.length}`
+    answerButtons.innerHTML = ''
+    nextButton.innerHTML = "Restart"
+    nextButton.style.display = "block";
+    nextButton.addEventListener('click', startQuiz);
+}
+
+startQuiz()
